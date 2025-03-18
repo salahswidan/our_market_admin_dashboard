@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../app_colors.dart';
 
-PreferredSizeWidget buildCustomAppBar(BuildContext context, String title) {
+PreferredSizeWidget buildCustomAppBar(BuildContext context, String title,{bool isBackButton = true}) {
   return AppBar(
     centerTitle: true,
     title: Text(
@@ -10,7 +10,7 @@ PreferredSizeWidget buildCustomAppBar(BuildContext context, String title) {
       style: TextStyle(color: Colors.white),
     ),
     backgroundColor: AppColors.kPrimaryColor,
-    leading: IconButton(
+    leading: isBackButton ? IconButton(
       icon: const Icon(
         Icons.arrow_back_ios,
         color: Colors.white,
@@ -18,6 +18,6 @@ PreferredSizeWidget buildCustomAppBar(BuildContext context, String title) {
       onPressed: () {
         Navigator.pop(context);
       },
-    ),
+    ):Container(),
   );
 }
