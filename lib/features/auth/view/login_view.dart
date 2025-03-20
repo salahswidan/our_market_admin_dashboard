@@ -25,20 +25,18 @@ class _LoginViewState extends State<LoginView> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            CustomField(
+            CustomTextField(
               controller: emailController,
               lableText: "Email",
             ),
             SizedBox(
               height: 20,
             ),
-            CustomField(
+            CustomTextField(
               controller: passwordController,
               lableText: "Password",
               isPassword: true,
-              onPressed: () {
-                
-              },
+              onPressed: () {},
             ),
             SizedBox(
               height: 20,

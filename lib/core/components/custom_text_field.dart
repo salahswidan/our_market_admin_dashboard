@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import '../app_colors.dart';
 
-class CustomField extends StatelessWidget {
-  const CustomField({
+class CustomTextField extends StatelessWidget {
+  const CustomTextField({
     super.key,
     this.controller,
-    required this.lableText,  this.isPassword = false, this.onPressed,
+    required this.lableText,
+    this.isPassword = false,
+    this.onPressed,
   });
   final TextEditingController? controller;
   final String lableText;
@@ -19,7 +21,11 @@ class CustomField extends StatelessWidget {
       cursorColor: AppColors.kBordersideColor,
       controller: controller,
       decoration: InputDecoration(
-        suffixIcon: isPassword ? IconButton(onPressed: onPressed, icon: Icon(Icons.remove_red_eye_outlined)) : null,
+          suffixIcon: isPassword
+              ? IconButton(
+                  onPressed: onPressed,
+                  icon: Icon(Icons.remove_red_eye_outlined))
+              : null,
           labelText: lableText,
           labelStyle: TextStyle(color: AppColors.kBlackColor),
           border: OutlineInputBorder(

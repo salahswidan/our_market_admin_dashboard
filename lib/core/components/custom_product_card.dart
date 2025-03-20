@@ -1,5 +1,7 @@
 
 import 'package:flutter/material.dart';
+import 'package:our_market_admin_dashboard/core/functions/navigate_to.dart';
+import 'package:our_market_admin_dashboard/features/products/view/edit_product.dart';
 
 import 'cache_image.dart';
 import 'custom_elevated_button.dart';
@@ -43,7 +45,7 @@ class CustomProductCard extends StatelessWidget {
                   height: 10,
                 ),
                 CustomElevatedButton(
-                    child: const Icon(Icons.edit), onPressed: () {})
+                    child: const Icon(Icons.edit), onPressed: ()=> naviagteTo(context,EditProductView()) )
               ],
             ),
             const SizedBox(
