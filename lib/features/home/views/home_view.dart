@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:our_market_admin_dashboard/core/functions/navigate_to.dart';
+import 'package:our_market_admin_dashboard/features/add_admin/view/add_admin_view.dart';
 import 'package:our_market_admin_dashboard/features/add_product/views/add_product.dart';
 import 'package:our_market_admin_dashboard/features/auth/view/login_view.dart';
 import 'package:our_market_admin_dashboard/features/products/view/product_view.dart';
@@ -80,7 +81,7 @@ class HomeView extends StatelessWidget {
               ),
               onPressed: () => naviagteTo(
                 context,
-                const LoginView(),
+                const AddAdminView(),
               ),
             ),
           ],
