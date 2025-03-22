@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:our_market_admin_dashboard/core/functions/navigate_to.dart';
+import 'package:our_market_admin_dashboard/features/products/view/comments_view.dart';
 import 'package:our_market_admin_dashboard/features/products/view/edit_product.dart';
 
 import 'cache_image.dart';
@@ -68,7 +69,7 @@ class CustomProductCard extends StatelessWidget {
                   height: 10,
                 ),
                 CustomElevatedButton(
-                    child: const Icon(Icons.comment), onPressed: () {})
+                    child: const Icon(Icons.comment), onPressed: ()=> naviagteTo(context,CommentsView()) )
               ],
             ),
             Padding(
