@@ -27,7 +27,7 @@ class ApiServices {
 
    final Dio dioAuth = Dio(
      BaseOptions(
-         baseUrl: 'https://fkjveyulwgvqmkuqllmi.supabase.co/auth/v1',
+         baseUrl: 'https://fkjveyulwgvqmkuqllmi.supabase.co/auth/v1/',
          headers: {
            "apikey": anonkey,
          }),
