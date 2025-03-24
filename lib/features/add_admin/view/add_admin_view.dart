@@ -12,26 +12,28 @@ class AddAdminView extends StatefulWidget {
 }
 
 class _AddAdminViewState extends State<AddAdminView> {
-  final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: buildCustomAppBar(context, "Add Admin"),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            CustomTextField(lableText: "Name",controller: _nameController,),
-            SizedBox(height: 20,),
-            CustomTextField(lableText: "Email",controller:_emailController ,),
-                                           SizedBox(height: 20,),
-         
-            CustomTextField(lableText: "Password",controller: _passwordController ,isPassword: true,),
-            SizedBox(height: 20,),
-            CustomElevatedButton(child: const Text("Add"), onPressed: (){},)
-          ],
+        child: Form(
+          key: _formKey,
+          child: Column(
+            children: [
+              SizedBox(height: 20,),
+              CustomTextField(lableText: "Email",controller:_emailController ,),
+                                             SizedBox(height: 20,),
+           
+              CustomTextField(lableText: "Password",controller: _passwordController ,isPassword: true,),
+              SizedBox(height: 20,),
+              CustomElevatedButton(child: const Text("Add"), onPressed: (){},)
+            ],
+          ),
         ),
       ),
     );

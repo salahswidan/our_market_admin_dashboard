@@ -24,4 +24,16 @@ class ApiServices {
   Future<Response> deleteData(String path) async {
     return await _dio.delete(path);
   }
+
+   final Dio dioAuth = Dio(
+     BaseOptions(
+         baseUrl: 'https://fkjveyulwgvqmkuqllmi.supabase.co/auth/v1',
+         headers: {
+           "apikey": anonkey,
+         }),
+   );
+     Future<Response> createAnAccount(String endpoint, Map<String, dynamic> data) async {
+    return await dioAuth.post(endpoint, data: data);
+  }
+
 }
