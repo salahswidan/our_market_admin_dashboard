@@ -25,20 +25,30 @@ class ApiServices {
     return await _dio.delete(path);
   }
 
-   final Dio dioAuth = Dio(
-     BaseOptions(
-         baseUrl: 'https://fkjveyulwgvqmkuqllmi.supabase.co/auth/v1/',
-         headers: {
-           "apikey": anonkey,
-         }),
-   );
-     Future<Response> createAnAccount(String endpoint, Map<String, dynamic> data) async {
+  final Dio dioAuth = Dio(
+    BaseOptions(
+      baseUrl: 'https://fkjveyulwgvqmkuqllmi.supabase.co/auth/v1/',
+      headers: {
+        "apikey": anonkey,
+      },
+      validateStatus: (status) {
+        return true; // السماح لكل الحالات لعرض الاستجابة في `console`
+      },
+    ),
+  );
+
+  Future<Response> createAnAccount(
+      String endpoint, Map<String, dynamic> data) async {
     return await dioAuth.post(endpoint, data: data);
   }
-     Future<Response> login(String endpoint, Map<String, dynamic> data) async {
-    return await dioAuth.post(endpoint, data: data,queryParameters: {
-      "grant_type": "password",
-    }); 
-  }
 
+  Future<Response> login(String endpoint, Map<String, dynamic> data) async {
+    return await dioAuth.post(
+      endpoint,
+      data: data,
+      queryParameters: {
+        "grant_type": "password",
+      },
+    );
+  }
 }

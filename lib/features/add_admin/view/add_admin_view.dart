@@ -58,7 +58,7 @@ class _AddAdminViewState extends State<AddAdminView> {
                     CustomTextField(
                       lableText: "Password",
                       controller: _passwordController,
-                      isPassword: true,
+                    //  isPassword: true,
                     ),
                     SizedBox(
                       height: 20,
