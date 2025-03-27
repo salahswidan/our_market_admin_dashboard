@@ -4,6 +4,8 @@ import 'package:our_market_admin_dashboard/core/components/custom_elevated_butto
 import 'package:our_market_admin_dashboard/core/components/custom_text_field.dart';
 import 'package:our_market_admin_dashboard/core/functions/build_appBar.dart';
 
+import '../../../core/shared_pref.dart';
+
 class EditProductView extends StatefulWidget {
   const EditProductView({super.key});
 
@@ -125,7 +127,11 @@ class _EditProductViewState extends State<EditProductView> {
               child: CustomElevatedButton(child: const Padding(
                 padding: EdgeInsets.all(8.0),
                 child: Text("Update"),
-              ), onPressed: () {}),
+              ), onPressed: () async{
+                String ? token = await SharedPref.getToken();
+                print("Token ===> $token");
+
+              }),
             )
           ],
         ),

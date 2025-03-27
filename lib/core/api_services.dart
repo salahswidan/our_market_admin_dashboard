@@ -32,7 +32,7 @@ class ApiServices {
         "apikey": anonkey,
       },
       validateStatus: (status) {
-        return true; // السماح لكل الحالات لعرض الاستجابة في `console`
+        return true; 
       },
     ),
   );
@@ -42,7 +42,7 @@ class ApiServices {
     return await dioAuth.post(endpoint, data: data);
   }
 
-  Future<Response> login(String endpoint, Map<String, dynamic> data) async {
+   Future<Response> login(String endpoint, Map<String, dynamic> data) async {
     return await dioAuth.post(
       endpoint,
       data: data,
