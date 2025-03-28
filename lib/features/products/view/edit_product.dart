@@ -3,24 +3,39 @@ import 'package:our_market_admin_dashboard/core/components/cache_image.dart';
 import 'package:our_market_admin_dashboard/core/components/custom_elevated_button.dart';
 import 'package:our_market_admin_dashboard/core/components/custom_text_field.dart';
 import 'package:our_market_admin_dashboard/core/functions/build_appBar.dart';
+import 'package:our_market_admin_dashboard/features/products/models/product_model.dart';
 
 import '../../../core/shared_pref.dart';
 
 class EditProductView extends StatefulWidget {
-  const EditProductView({super.key});
+  const EditProductView({super.key, required this.product});
+  final ProductModel product;
 
   @override
   State<EditProductView> createState() => _EditProductViewState();
 }
 
 class _EditProductViewState extends State<EditProductView> {
-  String selectedValue = "Collections";
-  String sale = "10";
+  String? selectedValue  ;
+  String? sale ;
   final TextEditingController _productNameController = TextEditingController();
   final TextEditingController _newPriceController = TextEditingController();
   final TextEditingController _oldPriceController = TextEditingController();
   final TextEditingController _productDescriptionController =
       TextEditingController();
+
+
+
+      @override
+  void initState() {
+    selectedValue = widget.product.category;
+    sale = widget.product.sale.toString();
+    _productNameController.text = widget.product.productName ?? "";
+    _newPriceController.text = widget.product.price.toString();
+    _oldPriceController.text = widget.product.oldPrice.toString();
+    _productDescriptionController.text = widget.product.description ?? "";
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,23 +58,23 @@ class _EditProductViewState extends State<EditProductView> {
                     dropdownMenuEntries: [
                       const DropdownMenuEntry(
                         label: "Sports",
-                        value: "Sports",
+                        value: "sports",
                       ),
                       const DropdownMenuEntry(
                         label: "Electronics",
-                        value: "Electronics",
+                        value: "electronics",
                       ),
                       const DropdownMenuEntry(
                         label: "Collections",
-                        value: "Collections",
+                        value: "collections",
                       ),
                       const DropdownMenuEntry(
                         label: "Books",
-                        value: "Books",
+                        value: "books",
                       ),
                       const DropdownMenuEntry(
                         label: "Bikes",
-                        value: "Bikes",
+                        value: "bikes",
                       ),
                     ]),
                 const SizedBox(
@@ -75,9 +90,9 @@ class _EditProductViewState extends State<EditProductView> {
                   children: [
                     ClipRRect(
                       borderRadius: BorderRadius.circular(20),
-                      child: const CacheImage(
+                      child:  CacheImage(
                           url:
-                              'https://img.freepik.com/premium-psd/3d-rendering-minimalist-interior-background-podium-product-display_285867-425.jpg?w=740',
+                          widget.product.imageUrl??    'https://img.freepik.com/premium-psd/3d-rendering-minimalist-interior-background-podium-product-display_285867-425.jpg?w=740',
                           width: 200,
                           height: 200),
                     ),

@@ -47,7 +47,9 @@ class CustomProductCard extends StatelessWidget {
                 ),
                 CustomElevatedButton(
                     child: const Icon(Icons.edit),
-                    onPressed: () => naviagteTo(context, EditProductView()))
+                    onPressed: () => naviagteTo(context, EditProductView(
+                      product: product,
+                    )))
               ],
             ),
             const SizedBox(
