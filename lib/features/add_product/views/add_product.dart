@@ -31,47 +31,44 @@ class _AddProductViewState extends State<AddProductView> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                        DropdownMenu(
-                        onSelected: (String? value) {
-                          setState(() {
-                            selectedValue = value ?? "Collections";
-                          });
-                        }, 
-                        initialSelection: selectedValue,
-                        dropdownMenuEntries: [
-                          const DropdownMenuEntry( 
-                            
-                            label: "Sports",
-                            value: "Sports",
-                          ),
-                          const DropdownMenuEntry(
-                            label: "Electronics",
-                            value: "Electronics",
-                          ),
-                          const DropdownMenuEntry(
-                            label: "Collections",
-                            value: "Collections",
-                          ),
-                          const DropdownMenuEntry(
-                            label: "Books",
-                            value: "Books",
-                          ),
-                          const DropdownMenuEntry(
-                            label: "Bikes",
-                            value: "Bikes",
-                          ),
-                        ]),
-                    const SizedBox(
-                      width: 20,
-                    ),
-                     Column(
-                      children: [
-                        Text("sale"),
-                      
-                        Text("$sale %"),
-                      ],
-                    ),
-            
+                DropdownMenu(
+                    onSelected: (String? value) {
+                      setState(() {
+                        selectedValue = value ?? "Collections";
+                      });
+                    },
+                    initialSelection: selectedValue,
+                    dropdownMenuEntries: [
+                      const DropdownMenuEntry(
+                        label: "Sports",
+                        value: "Sports",
+                      ),
+                      const DropdownMenuEntry(
+                        label: "Electronics",
+                        value: "Electronics",
+                      ),
+                      const DropdownMenuEntry(
+                        label: "Collections",
+                        value: "Collections",
+                      ),
+                      const DropdownMenuEntry(
+                        label: "Books",
+                        value: "Books",
+                      ),
+                      const DropdownMenuEntry(
+                        label: "Bikes",
+                        value: "Bikes",
+                      ),
+                    ]),
+                const SizedBox(
+                  width: 20,
+                ),
+                Column(
+                  children: [
+                    Text("sale"),
+                    Text("$sale %"),
+                  ],
+                ),
                 Column(
                   children: [
                     ClipRRect(
@@ -104,40 +101,55 @@ class _AddProductViewState extends State<AddProductView> {
             const SizedBox(
               height: 60,
             ),
-             CustomTextField(lableText: "Product Name",controller: _productNameController,),
+            CustomTextField(
+              lableText: "Product Name",
+              controller: _productNameController,
+            ),
             const SizedBox(
               height: 10,
             ),
-             CustomTextField(lableText: "New Price",controller: _newPriceController,),
+            CustomTextField(
+              lableText: "New Price",
+              controller: _newPriceController,
+            ),
             const SizedBox(
               height: 10,
             ),
-             CustomTextField(lableText: "Old Price",controller:_oldPriceController ,),
+            CustomTextField(
+              lableText: "Old Price",
+              controller: _oldPriceController,
+            ),
             const SizedBox(
               height: 10,
             ),
-             CustomTextField(lableText: "Product Description",controller: _productDescriptionController,),
+            CustomTextField(
+              lableText: "Product Description",
+              controller: _productDescriptionController,
+            ),
             const SizedBox(
               height: 20,
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(vertical:  8.0),
-              child: CustomElevatedButton(child: const Padding(
-                padding: EdgeInsets.all(8.0),
-                child: Text("Add"),
-              ), onPressed: () {}),
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              child: CustomElevatedButton(
+                  child: const Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Text("Add"),
+                  ),
+                  onPressed: () {}),
             )
           ],
         ),
       ),
     );
   }
+
   @override
   void dispose() {
     _productNameController.dispose();
     _newPriceController.dispose();
     _oldPriceController.dispose();
-    _productDescriptionController.dispose(); 
+    _productDescriptionController.dispose();
     super.dispose();
   }
 }

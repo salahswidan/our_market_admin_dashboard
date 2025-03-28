@@ -13,16 +13,19 @@ class ProductView extends StatelessWidget {
       create: (context) => ProductCubit()..getProducts(),
       child: BlocConsumer<ProductCubit, ProductState>(
         listener: (context, state) {
-          // TODO: implement listener
         },
         builder: (context, state) {
+          ProductCubit cubit = context.read<ProductCubit>();
           return Scaffold(
             appBar: buildCustomAppBar(context, "Products"),
             body: Padding(
               padding: const EdgeInsets.all(1.0),
               child: ListView.builder(
-                itemBuilder: (index, context) => const CustomProductCard(),
-                itemCount: 10,
+                itemBuilder: (contexxt, index) =>  
+                CustomProductCard(
+                  product: cubit.products[index],
+                ),
+                itemCount: cubit.products.length,
               ),
             ),
           );
@@ -31,3 +34,6 @@ class ProductView extends StatelessWidget {
     );
   }
 }
+
+//admin33@gmail.com
+//12345678FF

@@ -5,7 +5,9 @@ import 'custom_cicle_progress_indicator.dart';
 class CacheImage extends StatelessWidget {
   const CacheImage({
     super.key,
-    required this.url, required this.width, required this.height,
+    required this.url,
+    required this.width,
+    required this.height,
   });
   final String url;
   final double width;

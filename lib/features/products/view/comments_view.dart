@@ -10,13 +10,16 @@ class CommentsView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: buildCustomAppBar(context, "Conmments"),
-      body: ListView.builder(itemBuilder: (context,index)=> CommentCard(),itemCount: 10,),
+      body: ListView.builder(
+        itemBuilder: (context, index) => CommentCard(),
+        itemCount: 10,
+      ),
     );
   }
 }
 
 class CommentCard extends StatelessWidget {
-   CommentCard({
+  CommentCard({
     super.key,
   });
   final TextEditingController replyController = TextEditingController();
@@ -28,17 +31,34 @@ class CommentCard extends StatelessWidget {
       child: Card(
         child: Column(
           children: [
-            const Text("Comment : This is User Comment",style: TextStyle(fontSize: 20),),
-            const SizedBox(height: 10,),
-            const Text("Reply : This is Reply",style: TextStyle(fontSize: 20),),
-            const SizedBox(height: 10,),
+            const Text(
+              "Comment : This is User Comment",
+              style: TextStyle(fontSize: 20),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            const Text(
+              "Reply : This is Reply",
+              style: TextStyle(fontSize: 20),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child:   CustomTextField(lableText: "Reply",
-              controller: replyController,),
+              child: CustomTextField(
+                lableText: "Reply",
+                controller: replyController,
+              ),
             ),
-            const SizedBox(height: 10,),
-            CustomElevatedButton(onPressed: (){}, child: const Text("Reply"),),
+            const SizedBox(
+              height: 10,
+            ),
+            CustomElevatedButton(
+              onPressed: () {},
+              child: const Text("Reply"),
+            ),
           ],
         ),
       ),

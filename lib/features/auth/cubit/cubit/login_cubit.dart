@@ -12,13 +12,12 @@ class LoginCubit extends Cubit<LoginState> {
 
   final ApiServices _apiServices = ApiServices();
 
-
-    Future<void> login(Map<String, dynamic> data) async {
+  Future<void> login(Map<String, dynamic> data) async {
     emit(LoginLoading());
     try {
       Response response = await _apiServices.login("token", data);
       if (response.statusCode == 200) {
-       await SharedPref.saveToken(response.data["access_token"]);
+        await SharedPref.saveToken(response.data["access_token"]);
         emit(LoginSuccess());
         // save the token in the local storage by shared prefs
       } else {

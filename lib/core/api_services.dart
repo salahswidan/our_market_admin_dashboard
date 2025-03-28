@@ -9,12 +9,13 @@ class ApiServices {
           "apikey": anonkey,
         }),
   );
-  Future<Response> getData(String path,String? token) async {
-    return await _dio.get(path,options: Options(
-      headers: {
-        "Authorization": "Bearer $token",
-      },
-    ));
+  Future<Response> getData(String path, String? token) async {
+    return await _dio.get(path,
+        options: Options(
+          headers: {
+            "Authorization": "Bearer $token",
+          },
+        ));
   }
 
   Future<Response> postData(String path, Map<String, dynamic> data) async {
@@ -36,7 +37,7 @@ class ApiServices {
         "apikey": anonkey,
       },
       validateStatus: (status) {
-        return true; 
+        return true;
       },
     ),
   );
@@ -46,7 +47,7 @@ class ApiServices {
     return await dioAuth.post(endpoint, data: data);
   }
 
-   Future<Response> login(String endpoint, Map<String, dynamic> data) async {
+  Future<Response> login(String endpoint, Map<String, dynamic> data) async {
     return await dioAuth.post(
       endpoint,
       data: data,
