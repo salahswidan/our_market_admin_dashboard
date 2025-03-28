@@ -81,7 +81,7 @@ class HomeView extends StatelessWidget {
               ),
               onPressed: () => naviagteTo(
                 context,
-                const AddAdminView(),
+                const LoginView(),
               ),
             ),
           ],
