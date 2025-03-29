@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:our_market_admin_dashboard/core/components/cache_image.dart';
 import 'package:our_market_admin_dashboard/core/components/custom_elevated_button.dart';
 import 'package:our_market_admin_dashboard/core/components/custom_text_field.dart';
@@ -16,20 +17,18 @@ class EditProductView extends StatefulWidget {
 }
 
 class _EditProductViewState extends State<EditProductView> {
-  String? selectedValue  ;
-  String? sale ;
+  String? selectedValue;
+  String? Discount;
   final TextEditingController _productNameController = TextEditingController();
   final TextEditingController _newPriceController = TextEditingController();
   final TextEditingController _oldPriceController = TextEditingController();
   final TextEditingController _productDescriptionController =
       TextEditingController();
 
-
-
-      @override
+  @override
   void initState() {
     selectedValue = widget.product.category;
-    sale = widget.product.sale.toString();
+    Discount = widget.product.sale.toString();
     _productNameController.text = widget.product.productName ?? "";
     _newPriceController.text = widget.product.price.toString();
     _oldPriceController.text = widget.product.oldPrice.toString();
@@ -82,17 +81,17 @@ class _EditProductViewState extends State<EditProductView> {
                 ),
                 Column(
                   children: [
-                    Text("sale"),
-                    Text("$sale %"),
+                    Text("Discount"),
+                    Text("$Discount %"),
                   ],
                 ),
                 Column(
                   children: [
                     ClipRRect(
                       borderRadius: BorderRadius.circular(20),
-                      child:  CacheImage(
-                          url:
-                          widget.product.imageUrl??    'https://img.freepik.com/premium-psd/3d-rendering-minimalist-interior-background-podium-product-display_285867-425.jpg?w=740',
+                      child: CacheImage(
+                          url: widget.product.imageUrl ??
+                              'https://img.freepik.com/premium-psd/3d-rendering-minimalist-interior-background-podium-product-display_285867-425.jpg?w=740',
                           width: 200,
                           height: 200),
                     ),
@@ -126,15 +125,23 @@ class _EditProductViewState extends State<EditProductView> {
               height: 10,
             ),
             CustomTextField(
-              lableText: "New Price",
-              controller: _newPriceController,
+              inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'^(\d+)?\.?\d{0,2}'))],
+              lableText: "Old Price (Before Discount)",
+              controller: _oldPriceController,
             ),
             const SizedBox(
               height: 10,
             ),
             CustomTextField(
-              lableText: "Old Price",
-              controller: _oldPriceController,
+               inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'^(\d+)?\.?\d{0,2}'))],
+              lableText: "New Price (After Discount)",
+              controller: _newPriceController,
+              onChanged: (String val) {
+            double x=   (double.parse(_oldPriceController.text) - double.parse(val)) / double.parse(_oldPriceController.text) * 100;
+            setState(() {
+              Discount = x.round().toString();
+            });
+              },
             ),
             const SizedBox(
               height: 10,
