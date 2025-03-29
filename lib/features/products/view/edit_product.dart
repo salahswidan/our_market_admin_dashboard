@@ -6,6 +6,7 @@ import 'package:our_market_admin_dashboard/core/components/custom_text_field.dar
 import 'package:our_market_admin_dashboard/core/functions/build_appBar.dart';
 import 'package:our_market_admin_dashboard/features/products/models/product_model.dart';
 
+import '../../../core/functions/pick_image.dart';
 import '../../../core/shared_pref.dart';
 
 class EditProductView extends StatefulWidget {
@@ -36,6 +37,7 @@ class _EditProductViewState extends State<EditProductView> {
     super.initState();
   }
 
+  Uint8List? _selectedImage;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -89,7 +91,8 @@ class _EditProductViewState extends State<EditProductView> {
                   children: [
                     ClipRRect(
                       borderRadius: BorderRadius.circular(20),
-                      child: CacheImage(
+                      child:
+                      _selectedImage != null ? Image.memory(_selectedImage!,height: 300,width: 200,) : CacheImage(
                           url: widget.product.imageUrl ??
                               'https://img.freepik.com/premium-psd/3d-rendering-minimalist-interior-background-podium-product-display_285867-425.jpg?w=740',
                           width: 200,
@@ -101,7 +104,17 @@ class _EditProductViewState extends State<EditProductView> {
                     Row(
                       children: [
                         CustomElevatedButton(
-                            child: const Icon(Icons.image), onPressed: () {}),
+                            child: const Icon(Icons.image),
+                            onPressed: () async {
+                              await pickImage().then((value) {
+                               if(value != null) {
+                               setState(() {
+                                   Uint8List? bytes = value.files.first.bytes;
+                                  _selectedImage = bytes;
+                               });
+                               }
+                              });
+                            }),
                         const SizedBox(
                           width: 10,
                         ),
@@ -125,7 +138,9 @@ class _EditProductViewState extends State<EditProductView> {
               height: 10,
             ),
             CustomTextField(
-              inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'^(\d+)?\.?\d{0,2}'))],
+              inputFormatters: [
+                FilteringTextInputFormatter.allow(RegExp(r'^(\d+)?\.?\d{0,2}'))
+              ],
               lableText: "Old Price (Before Discount)",
               controller: _oldPriceController,
             ),
@@ -133,14 +148,19 @@ class _EditProductViewState extends State<EditProductView> {
               height: 10,
             ),
             CustomTextField(
-               inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'^(\d+)?\.?\d{0,2}'))],
+              inputFormatters: [
+                FilteringTextInputFormatter.allow(RegExp(r'^(\d+)?\.?\d{0,2}'))
+              ],
               lableText: "New Price (After Discount)",
               controller: _newPriceController,
               onChanged: (String val) {
-            double x=   (double.parse(_oldPriceController.text) - double.parse(val)) / double.parse(_oldPriceController.text) * 100;
-            setState(() {
-              Discount = x.round().toString();
-            });
+                double x = (double.parse(_oldPriceController.text) -
+                        double.parse(val)) /
+                    double.parse(_oldPriceController.text) *
+                    100;
+                setState(() {
+                  Discount = x.round().toString();
+                });
               },
             ),
             const SizedBox(
