@@ -3,15 +3,15 @@ import 'package:our_market_admin_dashboard/core/functions/navigate_to.dart';
 import 'package:our_market_admin_dashboard/features/products/models/product_model.dart';
 import 'package:our_market_admin_dashboard/features/products/view/comments_view.dart';
 import 'package:our_market_admin_dashboard/features/products/view/edit_product.dart';
-
 import 'cache_image.dart';
 import 'custom_elevated_button.dart';
 
 class CustomProductCard extends StatelessWidget {
   const CustomProductCard({
-    super.key, required this.product,
+    super.key, required this.product, this.deleteProduct,
   });
   final ProductModel product;
+  final void Function()? deleteProduct;
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -82,7 +82,7 @@ class CustomProductCard extends StatelessWidget {
                   child: Row(
                     children: const [Icon(Icons.delete), Text("Delete")],
                   ),
-                  onPressed: () {}),
+                  onPressed: deleteProduct),
             )
           ],
         ),

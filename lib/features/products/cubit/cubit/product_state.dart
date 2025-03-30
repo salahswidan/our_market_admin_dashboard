@@ -16,3 +16,7 @@ final class UploadImageError extends ProductState {}
 final class EditProductLoading extends ProductState {}
 final class EditProductSuccess extends ProductState {}
 final class EditProductError extends ProductState {}
+
+final class DeleteProductLoading extends ProductState {}
+final class DeleteProductSuccess extends ProductState {}
+final class DeleteProductError extends ProductState {}
