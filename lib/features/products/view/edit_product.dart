@@ -6,6 +6,8 @@ import 'package:our_market_admin_dashboard/core/components/custom_cicle_progress
 import 'package:our_market_admin_dashboard/core/components/custom_elevated_button.dart';
 import 'package:our_market_admin_dashboard/core/components/custom_text_field.dart';
 import 'package:our_market_admin_dashboard/core/functions/build_appBar.dart';
+import 'package:our_market_admin_dashboard/core/functions/navigate_without_back.dart';
+import 'package:our_market_admin_dashboard/features/home/views/home_view.dart';
 import 'package:our_market_admin_dashboard/features/products/cubit/cubit/product_cubit.dart';
 import 'package:our_market_admin_dashboard/features/products/models/product_model.dart';
 
@@ -48,13 +50,16 @@ class _EditProductViewState extends State<EditProductView> {
       create: (context) => ProductCubit(),
       child: BlocConsumer<ProductCubit, ProductState>(
         listener: (context, state) {
-          // TODO: implement listener
+          if (state is EditProductSuccess) {
+            naviagteWithoutBack(context,const HomeView());
+          }
         },
         builder: (context, state) {
           ProductCubit cubit = context.read<ProductCubit>();
           return Scaffold(
             appBar: buildCustomAppBar(context, "Edit Product"),
-            body: Padding(
+            body:state is EditProductLoading ? const CustomCircleIndicator() :
+            Padding(
               padding: const EdgeInsets.all(16.0),
               child: ListView(
                 children: [
@@ -139,16 +144,17 @@ class _EditProductViewState extends State<EditProductView> {
                               ),
                               CustomElevatedButton(
                                   child: const Icon(Icons.upload_file_rounded),
-                                  onPressed:state is UploadImageLoading ? null : () async {
-                                    if (_selectedImage != null) {
-                                    await  cubit.uploadImage(
-                                          image: _selectedImage!,
-                                          imageName: _imageName,
-                                          bucketName: "images",
-                                         );
-                                         print(cubit.imageUrl);
-                                    }
-                                  }),
+                                  onPressed: state is UploadImageLoading
+                                      ? null
+                                      : () async {
+                                          if (_selectedImage != null) {
+                                            await cubit.uploadImage(
+                                              image: _selectedImage!,
+                                              imageName: _imageName,
+                                              bucketName: "images",
+                                            );
+                                          }
+                                        }),
                             ],
                           ),
                         ],
@@ -210,9 +216,21 @@ class _EditProductViewState extends State<EditProductView> {
                           padding: EdgeInsets.all(8.0),
                           child: Text("Update"),
                         ),
-                        onPressed: () async {
-                          String? token = await SharedPref.getToken();
-                          print("Token ===> $token");
+                        onPressed:state is UploadImageLoading ? null : () async {
+                          cubit.editProduct(
+                              productId: widget.product.productId!,
+                              data: {
+                                "product_name": _productNameController.text,
+                                "price": _newPriceController.text,
+                                "old_price": _oldPriceController.text,
+                                "sale": Discount,
+                                "description":
+                                    _productDescriptionController.text,
+                                "category": selectedValue,
+                                "image_url": cubit.imageUrl.isEmpty
+                                    ? widget.product.imageUrl
+                                    : cubit.imageUrl
+                              });
                         }),
                   )
                 ],
