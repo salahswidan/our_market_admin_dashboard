@@ -33,7 +33,9 @@ class ProductCubit extends Cubit<ProductState> {
     }
   }
 
-  String imageUrl = "";
+  String imageUrl =
+      'https://img.freepik.com/premium-psd/3d-rendering-minimalist-interior-background-podium-product-display_285867-425.jpg?w=740';
+      
 
   Future<void> uploadImage(
       {required Uint8List image,
@@ -58,8 +60,6 @@ class ProductCubit extends Cubit<ProductState> {
     });
 
     try {
-     
-
       Response response = await _dio.post(
         uploadUrl,
         data: formData,
@@ -84,14 +84,15 @@ class ProductCubit extends Cubit<ProductState> {
     }
   }
 
-  Future<void> editProduct({required Map<String, dynamic> data,required String productId}) async {
+  Future<void> editProduct(
+      {required Map<String, dynamic> data, required String productId}) async {
     emit(EditProductLoading());
     try {
       String? token = await SharedPref.getToken();
-   Response response =   await _apiServices.patchData("product_table?product_id=eq.$productId", data,token);
-      if(response.statusCode == 204){
-              emit(EditProductSuccess());
-
+      Response response = await _apiServices.patchData(
+          "product_table?product_id=eq.$productId", data, token);
+      if (response.statusCode == 204) {
+        emit(EditProductSuccess());
       }
     } catch (e) {
       emit(EditProductError());
@@ -102,29 +103,31 @@ class ProductCubit extends Cubit<ProductState> {
     emit(DeleteProductLoading());
     try {
       String? token = await SharedPref.getToken();
-      await _apiServices.deleteData("comments_table?for_product=eq.$productId",token );
-      await _apiServices.deleteData("favorite_products?for_product=eq.$productId",token );
-      await _apiServices.deleteData("purchase_table?for_product=eq.$productId",token );
-      await _apiServices.deleteData("rates_table?for_product=eq.$productId",token );
-      await _apiServices.deleteData("product_table?product_id=eq.$productId",token );
+      await _apiServices.deleteData(
+          "comments_table?for_product=eq.$productId", token);
+      await _apiServices.deleteData(
+          "favorite_products?for_product=eq.$productId", token);
+      await _apiServices.deleteData(
+          "purchase_table?for_product=eq.$productId", token);
+      await _apiServices.deleteData(
+          "rates_table?for_product=eq.$productId", token);
+      await _apiServices.deleteData(
+          "product_table?product_id=eq.$productId", token);
       emit(DeleteProductSuccess());
     } catch (e) {
       emit(DeleteProductError());
     }
   }
-    Future<void> addProduct({required Map<String, dynamic> data}) async {
+
+  Future<void> addProduct({required Map<String, dynamic> data}) async {
     emit(AddProductLoading());
     try {
       String? token = await SharedPref.getToken();
-   await _apiServices.postData("product_table", data,token);
-     
-              emit(AddProductSuccess());
+      await _apiServices.postData("product_table", data, token);
 
-      
+      emit(AddProductSuccess());
     } catch (e) {
       emit(AddProductError());
     }
   }
-
-  }
-
+}

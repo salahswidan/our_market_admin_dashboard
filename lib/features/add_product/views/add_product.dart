@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:our_market_admin_dashboard/core/components/cache_image.dart';
 import 'package:our_market_admin_dashboard/core/components/custom_cicle_progress_indicator.dart';
@@ -63,27 +64,27 @@ class _AddProductViewState extends State<AddProductView> {
                               },
                               initialSelection: selectedValue,
                               dropdownMenuEntries: [
-                                const DropdownMenuEntry(
-                                  label: "Sports",
-                                  value: "Sports",
-                                ),
-                                const DropdownMenuEntry(
-                                  label: "Electronics",
-                                  value: "Electronics",
-                                ),
-                                const DropdownMenuEntry(
-                                  label: "Collections",
-                                  value: "Collections",
-                                ),
-                                const DropdownMenuEntry(
-                                  label: "Books",
-                                  value: "Books",
-                                ),
-                                const DropdownMenuEntry(
-                                  label: "Bikes",
-                                  value: "Bikes",
-                                ),
-                              ]),
+                            const DropdownMenuEntry(
+                              label: "Sports",
+                              value: "sports",
+                            ),
+                            const DropdownMenuEntry(
+                              label: "Electronics",
+                              value: "electronics",
+                            ),
+                            const DropdownMenuEntry(
+                              label: "Collections",
+                              value: "collections",
+                            ),
+                            const DropdownMenuEntry(
+                              label: "Books",
+                              value: "books",
+                            ),
+                            const DropdownMenuEntry(
+                              label: "Bikes",
+                              value: "bikes",
+                            ),
+                          ]),
                           const SizedBox(
                             width: 20,
                           ),
@@ -132,7 +133,17 @@ class _AddProductViewState extends State<AddProductView> {
                                   ),
                                   CustomElevatedButton(
                                       child: const Icon(Icons.upload_file_rounded),
-                                      onPressed: () {}),
+                                      onPressed: state is UploadImageLoading
+                                      ? null
+                                      : () async {
+                                          if (_selectedImage != null) {
+                                            await cubit.uploadImage(
+                                              image: _selectedImage!,
+                                              imageName: _imageName,
+                                              bucketName: "images",
+                                            );
+                                          }
+                                        }),
                                 ],
                               ),
                             ],
@@ -149,17 +160,34 @@ class _AddProductViewState extends State<AddProductView> {
                       const SizedBox(
                         height: 10,
                       ),
-                      CustomTextField(
-                        lableText: "New Price",
-                        controller: _newPriceController,
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      CustomTextField(
-                        lableText: "Old Price",
-                        controller: _oldPriceController,
-                      ),
+                         CustomTextField(
+                    inputFormatters: [
+                      FilteringTextInputFormatter.allow(
+                          RegExp(r'^(\d+)?\.?\d{0,2}'))
+                    ],
+                    lableText: "Old Price (Before Discount)",
+                    controller: _oldPriceController,
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  CustomTextField(
+                    inputFormatters: [
+                      FilteringTextInputFormatter.allow(
+                          RegExp(r'^(\d+)?\.?\d{0,2}'))
+                    ],
+                    lableText: "New Price (After Discount)",
+                    controller: _newPriceController,
+                    onChanged: (String val) {
+                      double x = (double.parse(_oldPriceController.text) -
+                              double.parse(val)) /
+                          double.parse(_oldPriceController.text) *
+                          100;
+                      setState(() {
+                        Discount = x.round().toString();
+                      });
+                    },
+                  ),
                       const SizedBox(
                         height: 10,
                       ),
@@ -177,7 +205,20 @@ class _AddProductViewState extends State<AddProductView> {
                               padding: EdgeInsets.all(8.0),
                               child: Text("Add"),
                             ),
-                            onPressed: () {}),
+                            onPressed: state is UploadImageLoading ? null : () async {
+                          cubit.addProduct(
+                              data: {
+                                "product_name": _productNameController.text,
+                                "price": _newPriceController.text,
+                                "old_price": _oldPriceController.text,
+                                "sale": Discount,
+                                "description":
+                                    _productDescriptionController.text,
+                                "category": selectedValue,
+                                "image_url": 
+                                     cubit.imageUrl
+                              });
+                        }),
                       )
                     ],
                   ),
