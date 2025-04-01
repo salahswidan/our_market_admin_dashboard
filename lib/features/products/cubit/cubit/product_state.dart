@@ -20,3 +20,7 @@ final class EditProductError extends ProductState {}
 final class DeleteProductLoading extends ProductState {}
 final class DeleteProductSuccess extends ProductState {}
 final class DeleteProductError extends ProductState {}
+
+final class AddProductLoading extends ProductState {}
+final class AddProductSuccess extends ProductState {}
+final class AddProductError extends ProductState {}
