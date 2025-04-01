@@ -33,7 +33,8 @@ class ProductView extends StatelessWidget {
                 itemBuilder: (contexxt, index) =>  
                 CustomProductCard(
                   deleteProduct: (){
-                    cubit.deleteProduct(productId:  cubit.products[index].productId!);
+                    cubit.deleteProduct(productId: 
+                     cubit.products[index].productId!);
                   },
                   product: cubit.products[index],
                 ),

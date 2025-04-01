@@ -102,6 +102,10 @@ class ProductCubit extends Cubit<ProductState> {
     emit(DeleteProductLoading());
     try {
       String? token = await SharedPref.getToken();
+      await _apiServices.deleteData("comments_table?for_product=eq.$productId",token );
+      await _apiServices.deleteData("favorite_products?for_product=eq.$productId",token );
+      await _apiServices.deleteData("purchase_table?for_product=eq.$productId",token );
+      await _apiServices.deleteData("rates_table?for_product=eq.$productId",token );
       await _apiServices.deleteData("product_table?product_id=eq.$productId",token );
       emit(DeleteProductSuccess());
     } catch (e) {
